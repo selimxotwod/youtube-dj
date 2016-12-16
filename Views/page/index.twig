@@ -1,13 +1,93 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>Youtube DJ</title>
+    <link rel="stylesheet" href="../../youtube-dj-master/assets/css/style.css">
+    <link rel="stylesheet" href="../../youtube-dj-master/assets/css/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700" rel="stylesheet">
 </head>
-<body style="background: blue">
-    {{ name }} à {{ age }} ans
+<body>
+<!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+<div id="player"></div>
+<p class="button">Changer</p>
+Insérer video : <input type="text" id="newVid">
+<button>Charger</button>
+
+<section>
+    <ul>
+        <li>
+            <h3>The weeknd</h3>
+            <img src="../../youtube-dj-master/assets/images/meme0ctober.png" alt="test">
+        </li>
+    </ul>
+
+
+</section>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="../../youtube-dj-master/assets/js/script.js"></script>
+<script>
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '360',
+            width: '640',
+            videoId: 'M7lc1UVf-VE',
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange,
+                'onError': onPlayerError,
+            }
+        });
+    }
+
+
+    // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+        event.target.playVideo();
+    }
+
+    // 5. The API calls this function when the player's state changes.
+    //    The function indicates that when playing a video (state=1),
+    //    the player should play for six seconds and then stop.
+    var done = false;
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+            setTimeout(stopVideo, 6000);
+            done = true;
+        }
+    }
+    function stopVideo() {
+        player.stopVideo();
+    }
+
+    function onPlayerError() {
+        alert('mauvais lien');
+    }
+
+
+    $("button").click(function () {
+        var newVideoValue = $('#newVid').val();
+        var newVideo = newVideoValue.substr(newVideoValue.indexOf("=") + 1);
+        player.loadVideoById( newVideo, 5, "large")
+        var time = player.getDuration();
+        console.log(time);
+
+    });
+
+
+
+</script>
 </body>
 </html>

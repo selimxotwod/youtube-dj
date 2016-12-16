@@ -19,6 +19,7 @@ $app->get('/', function ($request, $response, $args) {
     $client->setDeveloperKey($keyDev);
 
     $youtube = new Google_Service_YouTube($client);
+    $datas['keyDev'] = $keyDev;
     $datas['name'] = 'maxime';
     $datas['age'] = 20;
 

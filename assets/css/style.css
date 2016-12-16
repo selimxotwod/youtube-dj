@@ -1,0 +1,17 @@
+html *{
+    font-family: Sans-serif;
+}
+
+h3{
+    font-family: Sans-serif;
+}
+
+img{
+    width: 150px;
+    height:150px;
+}
+
+li{
+    float: left;
+    margin-right: 10px;
+}
